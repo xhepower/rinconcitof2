@@ -1,0 +1,34 @@
+@media screen and (min-width: 320px) {
+}
+
+/* Dispositivos móviles medianos */
+@media screen and (min-width: 480px) {
+  .container {
+    font-size: 16px;
+  }
+}
+
+/* Dispositivos móviles grandes y tablets */
+@media screen and (min-width: 768px) {
+  .container {
+    font-size: 18px;
+  }
+
+  .nav-list {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* Pantallas de escritorio y laptops */
+@media screen and (min-width: 1024px) {
+  .container {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 2560px) {
+  .main {
+    min-width: 1024px;
+  }
+}

@@ -1,0 +1,66 @@
+@import "Global";
+.item {
+  display: flex;
+  border: 1px solid $color3;
+  border-radius: 2px;
+  margin: 5px;
+  display: flex;
+  padding: 10px;
+  width: 100%;
+}
+.item-elemento {
+  margin: 3px;
+}
+.item-datos {
+  word-break: break-all;
+  width: 50%;
+}
+.item-actions {
+  width: 10%;
+}
+.foto {
+  border-radius: 10px;
+}
+// .lista-item b {
+//   color: $color2;
+//   padding: 5px;
+// }
+// .lista-actions {
+//   display: grid;
+//   height: 100%;
+//   place-self: center;
+
+//   width: 20%;
+// }
+// .lista-datos {
+//   align-self: center;
+//   justify-self: center;
+//   width: 40%;
+// }
+// .lista-foto {
+//   align-self: flex-end;
+//   justify-self: flex-end;
+//   width: 110px;
+//   height: 110px;
+// }
+
+// .item-foto {
+//   border-radius: 200px;
+//   //overflow: visible;
+// }
+.btnVer {
+  width: 25px;
+  height: 25px;
+}
+.datos.linea {
+  display: block;
+}
+.datos-etiqueta {
+  color: $color4;
+  text-overflow: "";
+}
+.datos-valor {
+  color: $color5;
+  text-overflow: "";
+  font-size: 0.8em;
+}
