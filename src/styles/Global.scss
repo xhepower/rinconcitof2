@@ -1,21 +1,6 @@
-$color1: #b22234;
-$color2: #ffffff;
-$color3: #3c3b6e;
-$color4: #bebebe;
-$color5: #ffd700;
-$color6: #ff0000;
+@import "./Colors.scss";
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-body {
-  // display: flex;
-  background-image: url("../assets/fondo-bandera-americana-cualquier-evento_114835-27586.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  min-width: 300px;
 }

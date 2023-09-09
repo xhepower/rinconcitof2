@@ -1,22 +1,67 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LoginLayout from "../containers/LoginLayout";
 import Layout from "../containers/Layout";
 import Login from "../pages/Login";
-import Home from "../pages/Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Appcontext from "../context/AppContext";
-import useInitialState from "../hooks/useInitialState";
+import RecoveryPassword from "../pages/RecoveryPassword";
+import EmailSent from "../pages/EmailSent";
+import ChangePassword from "../pages/ChangePassword";
+import PasswordChanged from "../pages/PasswordChanged";
 function App() {
-  const initialState = useInitialState();
   return (
-    <Appcontext.Provider value={initialState}>
+    <>
       <Layout>
         <BrowserRouter>
           <Routes>
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/" element={<Home />} />
+            <Route
+              exact
+              path="/login"
+              element={
+                <LoginLayout>
+                  <Login></Login>
+                </LoginLayout>
+              }
+            />
+            <Route
+              exact
+              path="/recovery-password"
+              element={
+                <LoginLayout>
+                  <RecoveryPassword></RecoveryPassword>
+                </LoginLayout>
+              }
+            />
+            <Route
+              exact
+              path="/email-sent"
+              element={
+                <LoginLayout>
+                  <EmailSent></EmailSent>
+                </LoginLayout>
+              }
+            />
+            <Route
+              exact
+              path="/recovery"
+              element={
+                <LoginLayout>
+                  <ChangePassword></ChangePassword>
+                </LoginLayout>
+              }
+            />
+            <Route
+              exact
+              path="/password-recovery"
+              element={
+                <LoginLayout>
+                  <PasswordChanged></PasswordChanged>
+                </LoginLayout>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Layout>
-    </Appcontext.Provider>
+    </>
   );
 }
 
