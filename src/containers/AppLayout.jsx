@@ -1,7 +1,21 @@
-import React from "react";
-
-function AppLayout({ children }) {
-  return <div className="container">{children}</div>;
+import React, { useContext } from "react";
+import { useToken } from "../hooks/useToken";
+import IntoContext from "../context/IntoContext";
+import { useApp } from "../hooks/useApp";
+function AppLayout(props) {
+  const { children, tabla, defaultValues, schema } = props;
+  const { obtenerToken } = useToken();
+  const tokencito = obtenerToken();
+  if (!tokencito) {
+    window.location.href = "/login";
+  }
+  const appState = useApp({ tabla, defaultValues, schema });
+  return (
+    <IntoContext.Provider value={appState}>
+      <div className="container">{children}</div>
+    </IntoContext.Provider>
+  );
+  // return <div className="container">{children}</div>;
 }
 
 export default AppLayout;
