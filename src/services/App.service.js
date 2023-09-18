@@ -15,9 +15,9 @@ class AppService {
   constructor(tabla) {
     this.tabla = tabla;
   }
-  getAll() {
+  getAll(parameters) {
     return http.get(`/${this.tabla}`, {
-      params: {},
+      params: parameters,
     });
   }
   getOne(id) {

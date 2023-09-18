@@ -1,5 +1,5 @@
 import axios from "axios";
-console.log(process.env.REACT_APP_HOST);
+
 const instance = axios.create({
   baseURL: `http://${process.env.REACT_APP_HOST}:3000/api/v1`,
   // baseURL: "http://192.168.1.6:3000/api/v1",

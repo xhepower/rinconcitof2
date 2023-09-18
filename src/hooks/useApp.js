@@ -6,14 +6,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 function useApp(props) {
   const [schema, setSchema] = useState(props.schema);
   const [pageLimit, setPageLimit] = useState(props.pageLimit);
-  const [searchTopics, setSearchTopics] = useState(props.pageLimit);
+  const [searchFields, setSearchfields] = useState(props.searchFields);
   const [defaultValues, setDefaultValues] = useState(props.defaultValues);
   const [tabla, setTabla] = useState(props.tabla);
   const [datos, setDatos] = useState([]);
   const [datosRender, setDatosRender] = useState([]);
   const [currentData, setCurrentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [offset, setOffset] = useState(0);
+  const [parameters, setParameters] = useState({});
   const Service = new AppService(tabla);
   const {
     register,
@@ -42,12 +43,14 @@ function useApp(props) {
     }
   };
   useEffect(() => {
-    actualizarDatos();
-  }, []);
+    (async () => {
+      await actualizarDatos();
+    })();
+  }, [parameters]);
   const actualizarDatos = async () => {
     setIsLoading(true);
     try {
-      setDatos((await Service.getAll()).data);
+      setDatos((await Service.getAll(parameters)).data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -101,6 +104,11 @@ function useApp(props) {
     setTabla,
     pageLimit,
     setPageLimit,
+    searchFields,
+    offset,
+    setOffset,
+    parameters,
+    setParameters,
   };
 }
 

@@ -24,7 +24,6 @@ import {
 import IntoContext from "../context/IntoContext";
 function App() {
   const initialState = useInitialState();
-
   return (
     <Appcontext.Provider value={initialState}>
       <Layout>
@@ -85,7 +84,7 @@ function App() {
                   schema={userSchema}
                   pageLimit={5}
                   vDateSearch={"vDateSearch"}
-                  searchTopics={["name"]}
+                  searchFields={{ email: "email" }}
                 >
                   <Users></Users>
                 </AppLayout>
