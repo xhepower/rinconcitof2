@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import Spinner from "../components/Spinner";
-import IntoContext from "../context/IntoContext";
+
+import useFormLogic from "../hooks/useFormLogic";
 function User() {
-  const { handleSubmit, save, isLoading, errors, register } =
-    useContext(IntoContext);
+  const { handleSubmit, save, isLoading, errors, register } = useFormLogic();
 
   return (
     <form className="app-form" noValidate onSubmit={handleSubmit(save)}>
@@ -32,9 +32,9 @@ function User() {
       />
       <p className="errors">{errors.password?.message}</p>
       <label htmlFor="password" className="label">
-        Contraseña
+        Rol
       </label>
-      <select id="role" name="role">
+      <select id="role" name="role" {...register("role")}>
         <option value="admin">Admin</option>
         <option value="user">User</option>
         <option value="editor">Editor</option>
@@ -42,7 +42,7 @@ function User() {
       <p className="errors">{errors.role?.message}</p>
       <input
         className="primary-button login-button"
-        value="Entrar"
+        value="Guardar"
         type="submit"
         onClick={handleSubmit}
       ></input>

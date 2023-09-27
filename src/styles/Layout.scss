@@ -1,0 +1,12 @@
+@import "./Global.scss";
+@import "Global";
+.Layout {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  height: 100vh;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  background-color: $color5;
+}

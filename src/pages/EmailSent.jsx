@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../styles/Form.scss";
 function EmailSent() {
   const handleClick = () => {
     window.location.href = "/login";

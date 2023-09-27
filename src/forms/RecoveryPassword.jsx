@@ -37,6 +37,7 @@ import React from "react";
 import { useRecoveryPassword } from "../hooks/useRecoveryPassword";
 import { useToken } from "../hooks/useToken";
 import Spinner from "../components/Spinner";
+import "../styles/Form.scss";
 function RecoveryPassword() {
   const { handleSubmit, save, isLoading, errors, register } =
     useRecoveryPassword();

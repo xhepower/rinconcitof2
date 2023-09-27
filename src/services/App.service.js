@@ -15,8 +15,13 @@ class AppService {
   constructor(tabla) {
     this.tabla = tabla;
   }
-  getAll(parameters) {
-    return http.get(`/${this.tabla}`, {
+  async getAll(parameters) {
+    return await http.get(`/${this.tabla}`, {
+      params: parameters,
+    });
+  }
+  totalPages(parameters) {
+    return http.get(`/${this.tabla}/totalpages`, {
       params: parameters,
     });
   }

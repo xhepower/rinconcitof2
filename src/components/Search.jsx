@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import IntoContext from "../context/IntoContext";
@@ -6,7 +7,7 @@ import {
   schema as searchSchema,
   defaultValues as searchDefault,
 } from "../schemas/yup/Search.yup";
-import { useContext } from "react";
+import "../styles/Search.scss";
 
 function Search() {
   const {
@@ -19,20 +20,15 @@ function Search() {
     defaultValues: searchDefault,
     resolver: yupResolver(searchSchema),
   });
-  const { searchFields, setParameters, actualizarDatos } =
+  const { searchFields, setCurrentPage, setSearchField, setSearchText } =
     useContext(IntoContext);
   const fields = Object.keys(searchFields);
-
   const filtrar = (data) => {
-    const rta = {};
-    if (data.searchText) {
-      //console.log(data.searchText);
-      rta[data.searchFields] = data.searchText;
-    }
-    setParameters(rta);
-    (async () => {
-      await actualizarDatos();
-    })();
+    const { searchText, searchField } = data;
+
+    setSearchText(searchText);
+    setSearchField(searchField);
+    setCurrentPage(0);
   };
   return (
     <form className="search" noValidate onSubmit={handleSubmit(filtrar)}>
@@ -49,11 +45,11 @@ function Search() {
           <label className="label">Buscar por:</label>
         </legend>
         <select
-          name="searchFields"
+          name="searchField"
           //   value={filtroValue}
           //   onChange={onFiltroChange}
           className="filtro"
-          {...register("searchFields")}
+          {...register("searchField")}
         >
           {fields.map((key) => {
             return (
@@ -64,7 +60,7 @@ function Search() {
           })}
         </select>
       </fieldset>
-      <input type="submit" />
+      <input type="submit" value="Buscar" />
     </form>
   );
 }

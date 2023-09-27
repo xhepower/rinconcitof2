@@ -1,0 +1,19 @@
+@import "Global";
+nav {
+  width: 100%;
+  margin-bottom: 20px;
+  width: 100%;
+}
+nav a {
+  color: white;
+  padding: 5px;
+  border: 3px solid $color2;
+  border-radius: 5px;
+}
+.ul-nav {
+  display: flex;
+  width: 100%;
+}
+.ul-nav li {
+  list-style: none;
+}

@@ -1,101 +1,81 @@
 import { useEffect, useState, useContext } from "react";
 import AppService from "../services/App.service";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 function useApp(props) {
   const [schema, setSchema] = useState(props.schema);
   const [pageLimit, setPageLimit] = useState(props.pageLimit);
   const [searchFields, setSearchfields] = useState(props.searchFields);
+  const [itemFields, setItemFields] = useState(props.itemFields);
+  const [searchField, setSearchField] = useState("");
+
   const [defaultValues, setDefaultValues] = useState(props.defaultValues);
   const [tabla, setTabla] = useState(props.tabla);
   const [datos, setDatos] = useState([]);
-  const [datosRender, setDatosRender] = useState([]);
-  const [currentData, setCurrentData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [parameters, setParameters] = useState({});
-  const Service = new AppService(tabla);
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: defaultValues,
-    resolver: yupResolver(schema),
-  });
-
-  const save = async (data) => {
-    setIsLoading(true);
-
-    try {
-      //data.idUser = currentUser;
-      const rta = await guardar(data);
-      reset();
-      actualizarDatos();
-      setIsLoading(false);
-      return rta;
-    } catch (error) {
-      setIsLoading(false);
-      setError("server", error);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [searchText, setSearchText] = useState("");
+  const parameters = () => {
+    let rta = {};
+    rta.offset = currentPage * pageLimit;
+    rta.limit = pageLimit;
+    if (searchText) {
+      rta.searchField = searchField;
+      rta.searchText = searchText;
     }
+    return rta;
+    //searchText,
+    // searchFields,
+    // limit,
+    // offset,
+    // page_limit,
+    // date
   };
+  const Service = new AppService(tabla);
+
   useEffect(() => {
     (async () => {
       await actualizarDatos();
     })();
-  }, [parameters]);
+  }, [currentPage, searchText, searchField]);
   const actualizarDatos = async () => {
-    setIsLoading(true);
+    const params = parameters();
+
+    delete params.offset;
     try {
-      setDatos((await Service.getAll(parameters)).data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setError("server", error);
-    }
+      setTotalPages(
+        Math.ceil((await Service.totalPages(params)).data) / pageLimit
+      );
+      setDatos((await Service.getAll(parameters())).data);
+    } catch (error) {}
   };
 
   const dato = async (id) => {
     return await Service.getOne(id);
   };
-
+  const guardar = async (data) => {
+    try {
+      await Service.save(data);
+      await actualizarDatos();
+    } catch (error) {}
+  };
   const eliminar = (id) => {
     if (window.confirm(`¿Desea eliminar el registro #${id}?`)) {
       (async () => {
-        Service.delete(id);
+        await Service.delete(id);
+        actualizarDatos();
       })();
-    }
-  };
-
-  const guardar = async (data) => {
-    if (window.confirm("¿Desea guardar el registro?")) {
-      try {
-        await Service.save(data);
-        setDatos((await Service.getAll()).data);
-      } catch (error) {}
     }
   };
 
   const actualizar = (id, data) => {};
   return {
     datos,
-    setDatosRender,
-    datosRender,
-    currentData,
-    setCurrentData,
     dato,
     actualizar,
     eliminar,
     guardar,
     actualizarDatos,
-    handleSubmit,
-    save,
-    register,
-    errors,
-    isLoading,
+    Service,
     schema,
     setSchema,
     defaultValues,
@@ -105,10 +85,17 @@ function useApp(props) {
     pageLimit,
     setPageLimit,
     searchFields,
-    offset,
-    setOffset,
     parameters,
-    setParameters,
+    setSearchfields,
+    totalPages,
+    setTotalPages,
+    currentPage,
+    setCurrentPage,
+    searchField,
+    setSearchField,
+    setSearchText,
+    itemFields,
+    setItemFields,
   };
 }
 

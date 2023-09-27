@@ -1,7 +1,17 @@
 import React from "react";
+import { useContext, useState } from "react";
+import { useEffect } from "react";
 import ReactPaginate from "react-paginate";
-
+import IntoContext from "../context/IntoContext";
+import "../styles/Pagination.scss";
 function Pagination(props) {
+  const { totalPages, currentPage, setCurrentPage } = useContext(IntoContext);
+
+  useEffect(() => {}, [totalPages]);
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
   return (
     <ReactPaginate
       nextLabel="Sig >"
@@ -9,6 +19,7 @@ function Pagination(props) {
       pageRangeDisplayed={3}
       marginPagesDisplayed={2}
       pageCount={totalPages}
+      initialPage={currentPage}
       previousLabel="< Ant"
       pageClassName="page-item"
       pageLinkClassName="page-link"

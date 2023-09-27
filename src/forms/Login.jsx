@@ -2,6 +2,7 @@ import React from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useToken } from "../hooks/useToken";
 import Spinner from "../components/Spinner";
+import "../styles/Form.scss";
 function Login() {
   const { handleSubmit, save, isLoading, errors, register } = useLogin();
   const { obtenerToken } = useToken();

@@ -84,10 +84,26 @@ function App() {
                   schema={userSchema}
                   pageLimit={5}
                   vDateSearch={"vDateSearch"}
-                  searchFields={{ email: "email" }}
+                  searchFields={{ email: "email", role: "rol" }}
+                  itemFields={{ email: "Email", role: "Rol", id: "Id" }}
                 >
                   <Users></Users>
                 </AppLayout>
+              }
+            />
+            <Route
+              exact
+              path="/"
+              element={
+                <AppLayout
+                  tabla="users"
+                  defaultValues={userDefault}
+                  schema={userSchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{ email: "email", role: "rol" }}
+                  itemFields={{ email: "Email", role: "Rol", id: "Id" }}
+                ></AppLayout>
               }
             />
           </Routes>
