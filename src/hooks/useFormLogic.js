@@ -3,7 +3,7 @@ import IntoContext from "../context/IntoContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 function useFormLogic() {
-  const { defaultValues, schema, actualizarDatos, guardar, datos, totalPages } =
+  const { defaultValues, schema, actualizarDatos, guardar } =
     useContext(IntoContext);
   const [isLoading, setIsLoading] = useState(false);
 

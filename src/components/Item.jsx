@@ -8,13 +8,15 @@ function Item({ dato }) {
   const handleEliminar = () => {
     eliminar(dato.id);
   };
+  let counter = 0;
   return (
     <div className="item">
       <div className="item-datos">
         {dFields.map((key) => {
           if (iFields.includes(key)) {
+            counter++;
             return (
-              <div className="item-fila">
+              <div className="item-fila" key={`id${dato.id}item${counter}`}>
                 <p className="item-field">{itemFields[key]}:</p>
                 <p className="item-key">{dato[key]}</p>
               </div>

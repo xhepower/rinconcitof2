@@ -5,9 +5,10 @@ import ReactPaginate from "react-paginate";
 import IntoContext from "../context/IntoContext";
 import "../styles/Pagination.scss";
 function Pagination(props) {
-  const { totalPages, currentPage, setCurrentPage } = useContext(IntoContext);
+  const { totalPages, currentPage, setCurrentPage, tabla, datos } =
+    useContext(IntoContext);
 
-  useEffect(() => {}, [totalPages]);
+  useEffect(() => {}, [tabla, datos, totalPages]);
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
   };

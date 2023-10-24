@@ -36,7 +36,7 @@ function useApp(props) {
     (async () => {
       await actualizarDatos();
     })();
-  }, [currentPage, searchText, searchField]);
+  }, [currentPage, searchText, searchField, tabla]);
   const actualizarDatos = async () => {
     const params = parameters();
 

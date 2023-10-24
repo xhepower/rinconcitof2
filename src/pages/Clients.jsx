@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import Elform from "../forms/User";
+import Elform from "../forms/Client";
 import IntoContext from "../context/IntoContext";
 import Search from "../components/Search";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
 import List from "../components/List";
-function Users(props) {
+function Clients(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [visibleAdd, setVisibleAdd] = useState(false);
-  const { datos, tabla, actualizarDatos } = useContext(IntoContext);
+  const { datos, tabla } = useContext(IntoContext);
 
   const handleVisibleAdd = () => {
     setVisibleAdd(!visibleAdd);
@@ -38,4 +38,4 @@ function Users(props) {
   );
 }
 
-export default Users;
+export default Clients;

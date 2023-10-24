@@ -12,6 +12,9 @@ import RecoveryPassword from "../pages/RecoveryPassword";
 import EmailSent from "../pages/EmailSent";
 import ChangePassword from "../pages/ChangePassword";
 import Users from "../pages/Users";
+import Units from "../pages/Units";
+import Ingredients from "../pages/Ingredients";
+import Categories from "../pages/Categories";
 import PasswordChanged from "../pages/PasswordChanged";
 //hooks
 import useInitialState from "../hooks/useInitialState";
@@ -21,7 +24,24 @@ import {
   schema as userSchema,
   defaultValues as userDefault,
 } from "../schemas/yup/User.yup";
+import {
+  schema as clientSchema,
+  defaultValues as clientDefault,
+} from "../schemas/yup/Client.yup";
+import {
+  schema as unitSchema,
+  defaultValues as unitDefault,
+} from "../schemas/yup/Unit.yup";
+import {
+  schema as categorySchema,
+  defaultValues as categoryDefault,
+} from "../schemas/yup/Category.yup";
+import {
+  schema as ingredientSchema,
+  defaultValues as ingredientDefault,
+} from "../schemas/yup/Category.yup";
 import IntoContext from "../context/IntoContext";
+import Clients from "../pages/Clients";
 function App() {
   const initialState = useInitialState();
   return (
@@ -93,19 +113,92 @@ function App() {
             />
             <Route
               exact
-              path="/"
+              path="/units"
               element={
                 <AppLayout
-                  tabla="users"
-                  defaultValues={userDefault}
-                  schema={userSchema}
+                  tabla="units"
+                  defaultValues={unitDefault}
+                  schema={unitSchema}
                   pageLimit={5}
                   vDateSearch={"vDateSearch"}
-                  searchFields={{ email: "email", role: "rol" }}
-                  itemFields={{ email: "Email", role: "Rol", id: "Id" }}
-                ></AppLayout>
+                  searchFields={{ name: "Nombre" }}
+                  itemFields={{ name: "Nombre Unidad", id: "Id" }}
+                >
+                  <Units></Units>
+                </AppLayout>
               }
             />
+            <Route
+              exact
+              path="/clients"
+              element={
+                <AppLayout
+                  tabla="clients"
+                  defaultValues={clientDefault}
+                  schema={clientSchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{ name: "Nombre", phone: "Telefono" }}
+                  itemFields={{
+                    name: "Nombre cliente",
+                    id: "Id",
+                    phone: "Telefono",
+                  }}
+                >
+                  <Clients></Clients>
+                </AppLayout>
+              }
+            />
+            <Route
+              exact
+              path="/categories"
+              element={
+                <AppLayout
+                  tabla="categories"
+                  defaultValues={categoryDefault}
+                  schema={categorySchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{ name: "Nombre", description: "Descripcion" }}
+                  itemFields={{
+                    name: "Nombre cliente",
+                    id: "Id",
+                    description: "Descripcion",
+                  }}
+                >
+                  <Categories></Categories>
+                </AppLayout>
+              }
+            />
+            <Route
+              exact
+              path="/ingredients"
+              element={
+                <AppLayout
+                  tabla="ingredients"
+                  defaultValues={ingredientDefault}
+                  schema={ingredientSchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{
+                    name: "Nombre",
+                    unitId: "Unidad",
+                    price: "Precio",
+                    stock: "stock",
+                  }}
+                  itemFields={{
+                    name: "Nombre ingrediente",
+                    id: "Id",
+                    unitId: "Unidad",
+                    price: "Precio",
+                    stock: "stock",
+                  }}
+                >
+                  <Ingredients></Ingredients>
+                </AppLayout>
+              }
+            />
+            <Route exact path="/" element={<AppLayout></AppLayout>} />
           </Routes>
         </BrowserRouter>
       </Layout>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useToken } from "../hooks/useToken";
 import IntoContext from "../context/IntoContext";
 import { useApp } from "../hooks/useApp";
@@ -6,9 +6,8 @@ import NavApp from "../components/NavApp";
 import "../styles/Container.scss";
 import "../styles/Page.scss";
 import "../styles/Lista.scss";
-function AppLayout(props) {
-  useEffect(() => {}, [props]);
 
+function AppLayout(props) {
   const {
     children,
     tabla,
@@ -19,11 +18,14 @@ function AppLayout(props) {
     pageLimit,
     itemFields,
   } = props;
+
   const { obtenerToken } = useToken();
   const tokencito = obtenerToken();
   if (!tokencito) {
     window.location.href = "/login";
   }
+  useEffect(() => {}, [tabla]);
+
   const appState = useApp({
     tabla,
     defaultValues,
@@ -36,7 +38,7 @@ function AppLayout(props) {
   return (
     <IntoContext.Provider value={appState}>
       <div className="container into-container">
-        <NavApp>{children}</NavApp>
+        <NavApp></NavApp>
         {children}
       </div>
     </IntoContext.Provider>
