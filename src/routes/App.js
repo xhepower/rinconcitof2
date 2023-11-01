@@ -39,7 +39,7 @@ import {
 import {
   schema as ingredientSchema,
   defaultValues as ingredientDefault,
-} from "../schemas/yup/Category.yup";
+} from "../schemas/yup/Ingredient.yup";
 import IntoContext from "../context/IntoContext";
 import Clients from "../pages/Clients";
 function App() {
@@ -182,16 +182,14 @@ function App() {
                   vDateSearch={"vDateSearch"}
                   searchFields={{
                     name: "Nombre",
-                    unitId: "Unidad",
-                    price: "Precio",
-                    stock: "stock",
                   }}
                   itemFields={{
                     name: "Nombre ingrediente",
                     id: "Id",
                     unitId: "Unidad",
                     price: "Precio",
-                    stock: "stock",
+                    stock: "Stock",
+                    minimum: "Minimo",
                   }}
                 >
                   <Ingredients></Ingredients>

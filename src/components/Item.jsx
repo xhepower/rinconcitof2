@@ -1,12 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import IntoContext from "../context/IntoContext";
+import EditForm from "../forms/IngredientEdit";
 import "../styles/Item.scss";
+
 function Item({ dato }) {
   const { itemFields, eliminar } = useContext(IntoContext);
   const dFields = Object.keys(dato);
   const iFields = Object.keys(itemFields);
+  const [visibleEdit, setVisibleEdit] = useState(false);
   const handleEliminar = () => {
     eliminar(dato.id);
+  };
+  const handleEditar = () => {
+    setVisibleEdit(!visibleEdit);
   };
   let counter = 0;
   return (
@@ -24,7 +30,11 @@ function Item({ dato }) {
           }
         })}
       </div>
+      {visibleEdit ? <EditForm dato={dato}></EditForm> : null}
       <div className="item-botones">
+        <button className="button-editar button-primary" onClick={handleEditar}>
+          Editar
+        </button>
         <button
           className="button-eliminar button-secondary"
           onClick={handleEliminar}

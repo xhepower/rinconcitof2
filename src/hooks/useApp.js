@@ -58,6 +58,12 @@ function useApp(props) {
       await actualizarDatos();
     } catch (error) {}
   };
+  const editar = async (id, data) => {
+    try {
+      await Service.update(id, data);
+      await actualizarDatos();
+    } catch (error) {}
+  };
   const eliminar = (id) => {
     if (window.confirm(`¿Desea eliminar el registro #${id}?`)) {
       (async () => {
@@ -71,7 +77,7 @@ function useApp(props) {
   return {
     datos,
     dato,
-    actualizar,
+    editar,
     eliminar,
     guardar,
     actualizarDatos,

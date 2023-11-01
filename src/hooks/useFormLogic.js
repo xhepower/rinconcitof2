@@ -2,8 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import IntoContext from "../context/IntoContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import AppService from "../services/App.service";
 function useFormLogic() {
-  const { defaultValues, schema, actualizarDatos, guardar } =
+  const { defaultValues, schema, actualizarDatos, guardar, editar } =
     useContext(IntoContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +26,32 @@ function useFormLogic() {
       setError("server", error);
     }
   };
+  const update = async (id, data) => {
+    setIsLoading(true);
 
+    try {
+      let rta;
+      //data.idUser = currentUser;
+      if (window.confirm("¿Desea actualizar el registro?")) {
+        rta = await editar(id, data);
+        reset();
+        actualizarDatos();
+      }
+      setIsLoading(false);
+      return rta;
+    } catch (error) {
+      setIsLoading(false);
+      setError("server", error);
+    }
+  };
+  const llenadoCmb = async (tabla, campo) => {
+    const servicio = new AppService(tabla);
+    const datos = (await servicio.getAll()).data;
+    const rta = datos.map((item) => {
+      return { id: item.id, campo: item[campo] };
+    });
+    return rta;
+  };
   const {
     register,
     handleSubmit,
@@ -36,7 +62,15 @@ function useFormLogic() {
     defaultValues: defaultValues,
     resolver: yupResolver(schema),
   });
-  return { handleSubmit, save, isLoading, errors, register };
+  return {
+    handleSubmit,
+    save,
+    isLoading,
+    errors,
+    register,
+    llenadoCmb,
+    update,
+  };
 }
 
 export default useFormLogic;

@@ -1,25 +1,56 @@
 import React, { useContext } from "react";
+import IntoContext from "../context/IntoContext";
 import Spinner from "../components/Spinner";
 import AppService from "../services/App.service";
 import useFormLogic from "../hooks/useFormLogic";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Option from "../components/Option";
-function Client() {
-  const { handleSubmit, save, isLoading, errors, register } = useFormLogic();
+import * as yup from "yup";
+
+function Client({ dato, setVisibleEdit }) {
+  const { update } = useFormLogic();
+  const actualizar = async (data) => {
+    console.log(dato.id, data);
+    await update(dato.id, data);
+  };
+  const { actualizarDatos, guardar, editar, isLoading } =
+    useContext(IntoContext);
+  const schema = yup.object().shape({
+    price: yup
+      .number()
+      .min(1, "debe ser un numero positivo")
+      .required("El precio es requerida"),
+    stock: yup
+      .number()
+      .min(1, "debe ser un numero positivo")
+      .required("El stock es requerida"),
+    minimum: yup
+      .number()
+      .min(1, "debe ser un numero positivo")
+      .required("El minimo es requerida"),
+  });
+  const defaultValues = {
+    price: dato.price,
+    stock: dato.stock,
+    minimum: dato.minimum,
+  };
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: defaultValues,
+    resolver: yupResolver(schema),
+  });
   const UnitService = new AppService("units");
   return (
-    <form className="app-form" noValidate onSubmit={handleSubmit(save)}>
+    <form className="app-form" noValidate onSubmit={handleSubmit(actualizar)}>
       {isLoading && <Spinner></Spinner>}
       <p className="errors">{errors.server?.message}</p>
-      <label htmlFor="name" className="label">
-        Nombre Ingrediente
-      </label>
-      <input
-        name="name"
-        placeholder="Ingrese aquí el nombre del ingrediente"
-        className="input input-email"
-        {...register("name")}
-      />
-      <p className="errors">{errors.name?.message}</p>
+
       <label htmlFor="price" className="label">
         Precio
       </label>
@@ -32,22 +63,6 @@ function Client() {
         {...register("price")}
       />
       <p className="errors">{errors.price?.message}</p>
-      <label htmlFor="unitId" className="label">
-        Unidad
-      </label>
-      <select
-        name="unitId"
-        className="input input-email"
-        {...register("unitId")}
-      >
-        {/* <option value="value1">Value 1</option>
-        <option value="value2" selected>
-          Value 2
-        </option>
-        <option value="value3">Value 3</option> */}
-        <Option tabla="units" campo="name"></Option>
-      </select>
-      <p className="errors">{errors.unitId?.message}</p>
       <label htmlFor="stock" className="label">
         Stock
       </label>
