@@ -7,7 +7,7 @@ function useApp(props) {
   const [searchFields, setSearchfields] = useState(props.searchFields);
   const [itemFields, setItemFields] = useState(props.itemFields);
   const [searchField, setSearchField] = useState("");
-
+  const [FormEdit, setFormEdit] = useState();
   const [defaultValues, setDefaultValues] = useState(props.defaultValues);
   const [tabla, setTabla] = useState(props.tabla);
   const [datos, setDatos] = useState([]);
@@ -102,6 +102,8 @@ function useApp(props) {
     setSearchText,
     itemFields,
     setItemFields,
+    FormEdit,
+    setFormEdit,
   };
 }
 

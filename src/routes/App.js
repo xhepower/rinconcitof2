@@ -14,6 +14,7 @@ import ChangePassword from "../pages/ChangePassword";
 import Users from "../pages/Users";
 import Units from "../pages/Units";
 import Ingredients from "../pages/Ingredients";
+import Products from "../pages/Products";
 import Categories from "../pages/Categories";
 import PasswordChanged from "../pages/PasswordChanged";
 //hooks
@@ -40,6 +41,10 @@ import {
   schema as ingredientSchema,
   defaultValues as ingredientDefault,
 } from "../schemas/yup/Ingredient.yup";
+import {
+  schema as productSchema,
+  defaultValues as productDefault,
+} from "../schemas/yup/Product.yup";
 import IntoContext from "../context/IntoContext";
 import Clients from "../pages/Clients";
 function App() {
@@ -193,6 +198,31 @@ function App() {
                   }}
                 >
                   <Ingredients></Ingredients>
+                </AppLayout>
+              }
+            />
+            <Route
+              exact
+              path="/products"
+              element={
+                <AppLayout
+                  tabla="products"
+                  defaultValues={productDefault}
+                  schema={productSchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{
+                    name: "Nombre",
+                  }}
+                  itemFields={{
+                    name: "Nombre ingrediente",
+                    id: "Id",
+                    description: "Descripcion",
+                    price: "Precio",
+                    idCategory: "Categoria Id",
+                  }}
+                >
+                  <Products></Products>
                 </AppLayout>
               }
             />

@@ -21,29 +21,25 @@ function Client({ dato, setVisibleEdit }) {
       .string()
       .min(3, "Debe ser de cuatro letras mínimo")
       .required("El nombre es requerida"),
+    description: yup
+      .string()
+      .min(3, "Debe ser de cuatro letras mínimo")
+      .required("La descripcion es requerida"),
     price: yup
       .number()
       .min(1, "debe ser un numero positivo")
       .required("El precio es requerida"),
-    stock: yup
+    idCategory: yup
       .number()
       .min(1, "debe ser un numero positivo")
-      .required("El stock es requerida"),
-    minimum: yup
-      .number()
-      .min(1, "debe ser un numero positivo")
-      .required("El minimo es requerida"),
-    unitId: yup
-      .number()
-      .min(1, "debe ser un numero positivo")
-      .required("El codigo de la unidad es requerida"),
+      .required("El codigo de la catregoria es requerida"),
   });
+
   const defaultValues = {
-    name: dato.name,
     price: dato.price,
-    stock: dato.stock,
-    minimum: dato.minimum,
-    unitId: dato.unitId,
+    name: dato.name,
+    description: dato.description,
+    idCategory: dato.idCategory,
   };
   const {
     register,
@@ -60,16 +56,27 @@ function Client({ dato, setVisibleEdit }) {
     <form className="app-form" noValidate onSubmit={handleSubmit(actualizar)}>
       {isLoading && <Spinner></Spinner>}
       <p className="errors">{errors.server?.message}</p>
+
       <label htmlFor="name" className="label">
-        Nombre Ingrediente
+        Nombre Producte
       </label>
       <input
         name="name"
-        placeholder="Ingrese aquí el nombre del ingrediente"
+        placeholder="Ingrese aquí el nombre del producte"
         className="input input-email"
         {...register("name")}
       />
       <p className="errors">{errors.name?.message}</p>
+      <label htmlFor="name" className="label">
+        Descripcion
+      </label>
+      <input
+        name="description"
+        placeholder="Ingrese descripcion del producto"
+        className="input input-email"
+        {...register("description")}
+      />
+      <p className="errors">{errors.description?.message}</p>
       <label htmlFor="price" className="label">
         Precio
       </label>
@@ -83,45 +90,21 @@ function Client({ dato, setVisibleEdit }) {
       />
       <p className="errors">{errors.price?.message}</p>
       <label htmlFor="unitId" className="label">
-        Unidad
+        Categoria
       </label>
       <select
-        name="unitId"
+        name="idCategory"
         className="input input-email"
-        {...register("unitId")}
+        {...register("idCategory")}
       >
         {/* <option value="value1">Value 1</option>
         <option value="value2" selected>
           Value 2
         </option>
         <option value="value3">Value 3</option> */}
-        <Option tabla="units" campo="name"></Option>
+        <Option tabla="categories" campo="name"></Option>
       </select>
       <p className="errors">{errors.unitId?.message}</p>
-      <label htmlFor="stock" className="label">
-        Stock
-      </label>
-      <input
-        name="stock"
-        type="number"
-        step={0.0}
-        placeholder="Ingrese aquí el stock"
-        className="input input-email"
-        {...register("stock")}
-      />
-      <p className="errors">{errors.stock?.message}</p>
-      <label htmlFor="minimum" className="label">
-        Minimo
-      </label>
-      <input
-        name="minimum"
-        type="number"
-        step={0.0}
-        placeholder="Ingrese aquí el minimo"
-        className="input input-email"
-        {...register("minimum")}
-      />
-      <p className="errors">{errors.minimum?.message}</p>
       <input
         className="primary-button login-button"
         value="Guardar"

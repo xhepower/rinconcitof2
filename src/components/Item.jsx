@@ -1,18 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import IntoContext from "../context/IntoContext";
-import EditForm from "../forms/IngredientEdit";
+import Detail from "./Detail";
+//import EditForm from "../forms/IngredientEdit";
 import "../styles/Item.scss";
 
-function Item({ dato }) {
+function Item({ dato, EditForm, AddForm, Grid }) {
   const { itemFields, eliminar } = useContext(IntoContext);
+
   const dFields = Object.keys(dato);
   const iFields = Object.keys(itemFields);
   const [visibleEdit, setVisibleEdit] = useState(false);
+  const [visibleDetails, setVisibleDetails] = useState(false);
   const handleEliminar = () => {
     eliminar(dato.id);
   };
   const handleEditar = () => {
     setVisibleEdit(!visibleEdit);
+  };
+  const handleDetails = () => {
+    setVisibleDetails(!visibleDetails);
   };
   let counter = 0;
   return (
@@ -30,11 +36,22 @@ function Item({ dato }) {
           }
         })}
       </div>
-      {visibleEdit ? <EditForm dato={dato}></EditForm> : null}
+      {visibleEdit && EditForm ? <EditForm dato={dato}></EditForm> : null}
+      {visibleDetails && Grid ? (
+        <Detail dato={dato} AddForm={AddForm} Grid={Grid}></Detail>
+      ) : null}
       <div className="item-botones">
         <button className="button-editar button-primary" onClick={handleEditar}>
           Editar
         </button>
+        {Grid ? (
+          <button
+            className="button-editar button-primary"
+            onClick={handleDetails}
+          >
+            Detalles
+          </button>
+        ) : null}
         <button
           className="button-eliminar button-secondary"
           onClick={handleEliminar}
