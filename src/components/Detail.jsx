@@ -1,13 +1,13 @@
 import React from "react";
-
+import "../styles/Detail.scss";
 function Detail(props) {
   const { AddForm, Grid, dato } = props;
-  console.log(dato);
+
   const { id } = dato;
   return (
     <div className="detail">
       <AddForm id={id}></AddForm>
-      <Grid datos={dato}></Grid>
+      <Grid id={id}></Grid>
     </div>
   );
 }
