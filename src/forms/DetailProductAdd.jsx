@@ -8,12 +8,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import * as yup from "yup";
 function DetailProductAdd(props) {
-  const { handleSubmit, save, isLoading, errors, register } = useFormLogic();
+  const { id } = props;
+  const service = new AppService("detailproducts");
   const schema = yup.object().shape({
-    productId: yup
-      .number()
-      .min(1, "debe ser un numero positivo")
-      .required("El id propducto es requerida"),
     ingredientId: yup
       .number()
       .min(1, "debe ser un numero positivo")
@@ -24,38 +21,63 @@ function DetailProductAdd(props) {
       .required("El id ingredeinte es requerida"),
   });
   const defaultValues = {
-    productId: 0,
     ingredientId: 0,
     quantity: 0,
   };
+  const { isLoading, setIsLoading } = useFormLogic();
+  const save = async (data) => {
+    try {
+      let rta;
+      //data.idUser = currentUser;
+      if (window.confirm("¿Desea guardar el registro?")) {
+        await service.save({ ...data, productId: id });
+        // await actualizarDatos();
+      }
+
+      return rta;
+    } catch (error) {
+      setError("server", error);
+    }
+  };
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: defaultValues,
+    resolver: yupResolver(schema),
+  });
+
   return (
     <form className="app-form" noValidate onSubmit={handleSubmit(save)}>
       {isLoading && <Spinner></Spinner>}
       <p className="errors">{errors.server?.message}</p>
 
-      <label htmlFor="unitId" className="label">
-        Categoria
+      <label htmlFor="ingredientId" className="label">
+        Ingrediente
       </label>
       <select
-        name="idCategory"
+        name="ingredientId"
         className="input input-email"
-        {...register("idCategory")}
+        {...register("ingredientId")}
       >
-        <Option tabla="categories" campo="name"></Option>
+        <Option tabla="ingredients" campo="name"></Option>
       </select>
-      <p className="errors">{errors.unitId?.message}</p>
-      <label htmlFor="price" className="label">
-        Precio
+      <p className="errors">{errors.ingredientId?.message}</p>
+      <label htmlFor="quantity" className="label">
+        Cantidad
       </label>
       <input
-        name="price"
+        name="quantity"
         type="number"
         step={0.0}
-        placeholder="Ingrese aquí el precio"
+        placeholder="Ingrese aquí la cantidad"
         className="input input-email"
-        {...register("price")}
+        {...register("quantity")}
       />
-      <p className="errors">{errors.price?.message}</p>
+      <p className="errors">{errors.quantity?.message}</p>
       <input
         className="primary-button login-button"
         value="Guardar"

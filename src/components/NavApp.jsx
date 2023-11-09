@@ -31,6 +31,9 @@ function navApp() {
       <a id="home" className="menu-item" href="/">
         Home
       </a>
+      <a id="products" className="menu-item" href="/products">
+        Productos
+      </a>
       <a id="users" className="menu-item" href="/users">
         Users
       </a>
