@@ -15,6 +15,9 @@ function Option({ tabla, campo }) {
 
   const ujum = cmb ? (
     cmb.map((item) => {
+      {
+        console.log(item.id, item.campo);
+      }
       return <option value={item.id}>{item.campo} </option>;
     })
   ) : (

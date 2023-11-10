@@ -21,6 +21,18 @@ function Client() {
         {...register("name")}
       />
       <p className="errors">{errors.name?.message}</p>
+      <label htmlFor="cost" className="label">
+        Costo
+      </label>
+      <input
+        name="cost"
+        type="number"
+        step={0.0}
+        placeholder="Ingrese aquí el costo"
+        className="input input-email"
+        {...register("cost")}
+      />
+      <p className="errors">{errors.cost?.message}</p>
       <label htmlFor="price" className="label">
         Precio
       </label>
@@ -33,6 +45,17 @@ function Client() {
         {...register("price")}
       />
       <p className="errors">{errors.price?.message}</p>
+      <label htmlFor="isProduct" className="label">
+        ¿Es un producto?
+      </label>
+      <input
+        name="IsProduct"
+        type="checkbox"
+        className="input input-email"
+        {...register("isProduct")}
+      />
+      <p className="errors">{errors.IsProduct?.message}</p>
+
       <label htmlFor="unitId" className="label">
         Unidad
       </label>

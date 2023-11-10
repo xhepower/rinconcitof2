@@ -16,6 +16,11 @@ const schema = yup.object().shape({
     .number()
     .min(1, "debe ser un numero positivo")
     .required("El stock es requerida"),
+  cost: yup
+    .number()
+    .min(1, "debe ser un numero positivo")
+    .required("El costo es requerida"),
+  isProduct: yup.boolean().required("Diga si es producto"),
   minimum: yup
     .number()
     .min(1, "debe ser un numero positivo")
@@ -26,6 +31,8 @@ const defaultValues = {
   price: 0,
   unitId: 0,
   stock: 0,
+  cost: 0,
   minimum: 0,
+  isProduct: false,
 };
 export { schema, defaultValues };

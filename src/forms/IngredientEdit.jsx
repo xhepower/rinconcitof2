@@ -25,6 +25,11 @@ function Client({ dato, setVisibleEdit }) {
       .number()
       .min(1, "debe ser un numero positivo")
       .required("El precio es requerida"),
+    cost: yup
+      .number()
+      .min(1, "debe ser un numero positivo")
+      .required("El costo es requerida"),
+    isProduct: yup.boolean(),
     stock: yup
       .number()
       .min(1, "debe ser un numero positivo")
@@ -44,6 +49,8 @@ function Client({ dato, setVisibleEdit }) {
     stock: dato.stock,
     minimum: dato.minimum,
     unitId: dato.unitId,
+    cost: dato.cost,
+    isProduct: dato.isProduct,
   };
   const {
     register,
@@ -70,6 +77,18 @@ function Client({ dato, setVisibleEdit }) {
         {...register("name")}
       />
       <p className="errors">{errors.name?.message}</p>
+      <label htmlFor="cost" className="label">
+        Costo
+      </label>
+      <input
+        name="cost"
+        type="number"
+        step={0.0}
+        placeholder="Ingrese aquí el costo"
+        className="input input-email"
+        {...register("cost")}
+      />
+      <p className="errors">{errors.cost?.message}</p>
       <label htmlFor="price" className="label">
         Precio
       </label>
@@ -82,6 +101,16 @@ function Client({ dato, setVisibleEdit }) {
         {...register("price")}
       />
       <p className="errors">{errors.price?.message}</p>
+      <label htmlFor="isProduct" className="label">
+        ¿Es un producto?
+      </label>
+      <input
+        name="IsProduct"
+        type="checkbox"
+        className="input input-email"
+        {...register("isProduct")}
+      />
+      <p className="errors">{errors.IsProduct?.message}</p>
       <label htmlFor="unitId" className="label">
         Unidad
       </label>
@@ -89,6 +118,7 @@ function Client({ dato, setVisibleEdit }) {
         name="unitId"
         className="input input-email"
         {...register("unitId")}
+        defaultValue={defaultValues.unitId}
       >
         {/* <option value="value1">Value 1</option>
         <option value="value2" selected>
