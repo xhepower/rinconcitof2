@@ -3,22 +3,27 @@ import { useState } from "react";
 import useFormLogic from "../hooks/useFormLogic";
 import { useEffect } from "react";
 
-function Option({ tabla, campo }) {
+function Option({ tabla, campo, atributos }) {
   const { llenadoCmb } = useFormLogic();
   const [cmb, setCmb] = useState([]);
   useEffect(() => {
     (async () => {
-      const cmbUnit = await llenadoCmb(tabla, campo);
+      const cmbUnit = await llenadoCmb(tabla, campo, atributos);
       setCmb(cmbUnit);
     })();
   }, [tabla, campo]);
 
   const ujum = cmb ? (
     cmb.map((item) => {
-      {
-        console.log(item.id, item.campo);
-      }
-      return <option value={item.id}>{item.campo} </option>;
+      return (
+        <option
+          atr={JSON.stringify(item.atr)}
+          value={item.id}
+          id={`${tabla}-${item.id}-${item.campo}`}
+        >
+          {item.campo}
+        </option>
+      );
     })
   ) : (
     <></>

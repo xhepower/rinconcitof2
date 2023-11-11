@@ -15,6 +15,7 @@ import Users from "../pages/Users";
 import Units from "../pages/Units";
 import Ingredients from "../pages/Ingredients";
 import Products from "../pages/Products";
+import Orders from "../pages/Orders";
 import Categories from "../pages/Categories";
 import PasswordChanged from "../pages/PasswordChanged";
 //hooks
@@ -45,6 +46,10 @@ import {
   schema as productSchema,
   defaultValues as productDefault,
 } from "../schemas/yup/Product.yup";
+import {
+  schema as orderSchema,
+  defaultValues as orderDefault,
+} from "../schemas/yup/Order.yup";
 import IntoContext from "../context/IntoContext";
 import Clients from "../pages/Clients";
 function App() {
@@ -226,7 +231,30 @@ function App() {
                 </AppLayout>
               }
             />
+            <Route
+              exact
+              path="/orders"
+              element={
+                <AppLayout
+                  tabla="orders"
+                  defaultValues={orderDefault}
+                  schema={orderSchema}
+                  pageLimit={5}
+                  vDateSearch={"vDateSearch"}
+                  searchFields={{}}
+                  itemFields={{
+                    id: "Id",
+                    clientId: "Id Cliente",
+                    status: "Estado",
+                    total: "total",
+                  }}
+                >
+                  <Orders></Orders>
+                </AppLayout>
+              }
+            />
             <Route exact path="/" element={<AppLayout></AppLayout>} />
+            <Route exact path="*" element={"error"} />
           </Routes>
         </BrowserRouter>
       </Layout>

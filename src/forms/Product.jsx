@@ -62,7 +62,7 @@ function Client() {
         className="primary-button login-button"
         value="Guardar"
         type="submit"
-        onClick={handleSubmit}
+        onClick={(data) => {}}
       ></input>
     </form>
   );

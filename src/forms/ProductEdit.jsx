@@ -11,7 +11,6 @@ import * as yup from "yup";
 function Client({ dato, setVisibleEdit }) {
   const { update } = useFormLogic();
   const actualizar = async (data) => {
-    console.log(dato.id, data);
     await update(dato.id, data);
   };
   const { actualizarDatos, guardar, editar, isLoading } =

@@ -29,7 +29,6 @@ function ProductGrid({ id }) {
       </tr>
       {datos
         ? datos.map((item) => {
-            console.log(item.id);
             return (
               <tr className="table-row">
                 <td className="grid-item">{item.Ingredient.name} </td>

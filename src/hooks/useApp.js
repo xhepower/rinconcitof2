@@ -14,6 +14,7 @@ function useApp(props) {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const parameters = () => {
     let rta = {};
     rta.offset = currentPage * pageLimit;
@@ -104,6 +105,8 @@ function useApp(props) {
     setItemFields,
     FormEdit,
     setFormEdit,
+    openModal,
+    setOpenModal,
   };
 }
 

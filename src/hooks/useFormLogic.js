@@ -45,12 +45,27 @@ function useFormLogic() {
       setError("server", error);
     }
   };
-  const llenadoCmb = async (tabla, campo) => {
+  const llenadoCmb = async (tabla, campo, atributos) => {
+    let rta;
     const servicio = new AppService(tabla);
     const datos = (await servicio.getAll()).data;
-    const rta = datos.map((item) => {
-      return { id: item.id, campo: item[campo] };
-    });
+    if (atributos == undefined) {
+      rta = datos.map((item) => {
+        return { id: item.id, campo: item[campo] };
+      });
+    } else {
+      rta = datos.map((item) => {
+        let arre = { id: item.id, campo: item[campo] };
+        let ptr = {};
+        atributos.map((atributo) => {
+          ptr[atributo] = item[atributo];
+        });
+        arre["atr"] = ptr;
+
+        return arre;
+      });
+    }
+
     return rta;
   };
   const {
