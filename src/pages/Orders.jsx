@@ -10,32 +10,20 @@ import Pagination from "../components/Pagination";
 import List from "../components/List";
 import PopUp from "../components/PopUp";
 import DetailOrderAdd from "../forms/DetailOrderAdd";
+import OrderContext from "../context/OrderContext";
+import { useOrder } from "../hooks/useOrder";
 function Products(props) {
+  const orderProvider = useOrder();
   const [isLoading, setIsLoading] = useState(false);
   const [visibleAdd, setVisibleAdd] = useState(false);
   const { datos, tabla } = useContext(IntoContext);
-  const [items, setItems] = useState([]);
-  const [total, setTotal] = useState(0);
+
+  const { items, setItems, total, setTotal } = useContext(OrderContext);
   const [openModal, setOpenModal] = useState(false);
   const handleVisibleAdd = () => {
     setVisibleAdd(!visibleAdd);
     setItems([]);
   };
-  const calcularTotal = () => {
-    let eltotal = 0;
-    if (items) {
-      items.map((item) => {
-        console.log(item, "item");
-        eltotal = eltotal + item.price * item.quantity;
-      });
-    }
-    console.log(eltotal);
-    return setTotal(eltotal);
-  };
-  useEffect(() => {
-    calcularTotal();
-  }, []);
-
   return (
     <div className="page">
       <div className="sticky-area">
@@ -43,15 +31,7 @@ function Products(props) {
           <button className="button-add" onClick={handleVisibleAdd}>
             Agregar
           </button>
-          {visibleAdd ? (
-            <Elform
-              items={items}
-              setItems={setItems}
-              setOpenModal={setOpenModal}
-              total={total}
-              setTotal={setTotal}
-            ></Elform>
-          ) : null}
+          {visibleAdd ? <Elform setOpenModal={setOpenModal}></Elform> : null}
         </div>
         <Search></Search>
         <Pagination></Pagination>
@@ -66,12 +46,7 @@ function Products(props) {
       )}
       {openModal && (
         <PopUp setOpenModal={setOpenModal}>
-          <DetailOrderAdd
-            items={items}
-            setItems={setItems}
-            total={total}
-            setTotal={setTotal}
-          ></DetailOrderAdd>
+          <DetailOrderAdd></DetailOrderAdd>
         </PopUp>
       )}
     </div>

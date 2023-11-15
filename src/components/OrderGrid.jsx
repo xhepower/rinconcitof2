@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import AppService from "../services/App.service";
 import "../styles/GridForm.scss";
 import { useEffect } from "react";
-function OrderGrid({ items, setItems, total, setTotal }) {
-  const service = new AppService("products");
-  const [datos, setdatos] = useState([]);
+import { useContext } from "react";
+import OrderContext from "../context/OrderContext";
+function OrderGrid(props) {
+  const { items, setItems, total, setTotal, calcularTotal } =
+    useContext(OrderContext);
   const borrarItem = async (id) => {
     let rta = window.confirm(`¿Dese eliminar el producto #${id}`);
     if (rta) {
@@ -14,12 +16,7 @@ function OrderGrid({ items, setItems, total, setTotal }) {
       setItems(nItems);
     }
   };
-  const getName = (id) => {
-    let nombre;
-    (async () => {
-      nombre = await (await service.getOne(id)).data.name;
-    })();
-  };
+
   useEffect(() => {}, [items, total]);
 
   return (

@@ -9,12 +9,17 @@ import * as yup from "yup";
 import { useState } from "react";
 import DetailOrderAdd from "./DetailOrderAdd";
 import OrderGrid from "../components/OrderGrid";
+import OrderContext from "../context/OrderContext";
 function Client(props) {
-  const { items, setItems, setOpenModal, total, setTotal } = props;
+  const { setOpenModal } = props;
+  const { items, setItems, total, setTotal, calcularTotal } =
+    useContext(OrderContext);
   const { handleSubmit, save, isLoading, errors, register } = useFormLogic();
   const handleSave = (data, e) => {
     // e.preventDefault();
+
     data.items = items;
+    data.total = total;
     save(data);
   };
 
@@ -48,6 +53,7 @@ function Client(props) {
         setItems={setItems}
         total={total}
         setTotal={setTotal}
+        calcularTotal={calcularTotal}
       ></OrderGrid>
       <input
         className="primary-button login-button"

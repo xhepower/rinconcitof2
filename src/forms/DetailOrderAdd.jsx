@@ -1,11 +1,16 @@
 import React from "react";
+import { useEffect } from "react";
 import useFormLogic from "../hooks/useFormLogic";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Option from "../components/Option";
 import OrderGrid from "../components/OrderGrid";
 import * as yup from "yup";
-function DetailOrderAdd({ items, setItems, total, setTotal }) {
+import { useContext } from "react";
+import OrderContext from "../context/OrderContext";
+function DetailOrderAdd(props) {
+  const { items, setItems, total, setTotal, calcularTotal } =
+    useContext(OrderContext);
   const onSubmit = (data, e) => {
     e.preventDefault();
     if (data) {
@@ -25,6 +30,7 @@ function DetailOrderAdd({ items, setItems, total, setTotal }) {
     let nitems = items;
     nitems.push(data);
     setItems(nitems);
+    calcularTotal();
   };
   const onError = (errors, e) => console.log(errors);
   const schema = yup.object().shape({
@@ -33,7 +39,7 @@ function DetailOrderAdd({ items, setItems, total, setTotal }) {
       .min(1, "debe ser un numero positivo")
       .required("El prodcuto es requerida"),
     quantity: yup
-      .number()
+      .number(2)
       .min(1, "debe ser un numero positivo")
       .required("El codigo de la unidad es requerida"),
   });
@@ -51,7 +57,6 @@ function DetailOrderAdd({ items, setItems, total, setTotal }) {
     defaultValues: defaultValues,
     resolver: yupResolver(schema),
   });
-
   return (
     <form
       form
@@ -98,6 +103,7 @@ function DetailOrderAdd({ items, setItems, total, setTotal }) {
         setItems={setItems}
         total={total}
         setTotal={setTotal}
+        calcularTotal={calcularTotal}
       ></OrderGrid>
     </form>
   );

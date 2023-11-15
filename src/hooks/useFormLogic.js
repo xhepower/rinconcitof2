@@ -3,10 +3,12 @@ import IntoContext from "../context/IntoContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AppService from "../services/App.service";
+import OrderContext from "../context/OrderContext";
 
 function useFormLogic() {
   const { defaultValues, schema, actualizarDatos, guardar, editar } =
     useContext(IntoContext);
+  const { setItems, setTotal } = useContext(OrderContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const save = async (data) => {
@@ -21,6 +23,8 @@ function useFormLogic() {
         actualizarDatos();
       }
       setIsLoading(false);
+      setItems([]);
+      setTotal(0);
       return rta;
     } catch (error) {
       setIsLoading(false);

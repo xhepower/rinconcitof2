@@ -3,6 +3,8 @@ import { useToken } from "../hooks/useToken";
 import IntoContext from "../context/IntoContext";
 import { useApp } from "../hooks/useApp";
 import NavApp from "../components/NavApp";
+import { useOrder } from "../hooks/useOrder";
+import OrderContext from "../context/OrderContext";
 import "../styles/Container.scss";
 import "../styles/Page.scss";
 import "../styles/Lista.scss";
@@ -25,7 +27,7 @@ function AppLayout(props) {
     window.location.href = "/login";
   }
   useEffect(() => {}, [tabla]);
-
+  const orderProvider = useOrder();
   const appState = useApp({
     tabla,
     defaultValues,
@@ -37,10 +39,12 @@ function AppLayout(props) {
   });
   return (
     <IntoContext.Provider value={appState}>
-      <div className="container into-container">
-        <NavApp></NavApp>
-        {children}
-      </div>
+      <OrderContext.Provider value={orderProvider}>
+        <div className="container into-container">
+          <NavApp></NavApp>
+          {children}
+        </div>
+      </OrderContext.Provider>
     </IntoContext.Provider>
   );
   // return <div className="container">{children}</div>;
