@@ -35,6 +35,7 @@ class AppService {
       console.error(error);
     }
   }
+
   delete(id) {
     return http.delete(`/${this.tabla}/${id}`);
   }
