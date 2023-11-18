@@ -14,6 +14,7 @@ function OrderGrid(props) {
         return item.productId !== id;
       });
       setItems(nItems);
+      calcularTotal();
     }
   };
 
